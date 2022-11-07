@@ -1,0 +1,20 @@
+#set($dtoPackage=$package.Entity.replace("entity","dto"))
+package $!{dtoPackage};
+
+import lombok.Data;
+
+import java.io.Serializable;
+
+/**
+ * $!{table.comment} 数据传输对象实体类
+ *
+ * @author $!{author}
+ * @date $!{date}
+ */
+#if($!{entityLombokModel})
+@Data
+#end
+public class $!{entity}DTO implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+}

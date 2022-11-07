@@ -1,0 +1,69 @@
+package ${package.Entity};
+
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+#if(${superEntityClass})
+import lombok.EqualsAndHashCode;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+#end
+
+/**
+ *
+ * $!{table.comment}
+ *
+ * @author ${author}
+ * @date ${date}
+ */
+@Data
+@TableName("$!{table.name}")
+@ApiModel(value = "${entity}对象", description = "$!{table.comment}")
+#if(${superEntityClass})
+@EqualsAndHashCode(callSuper = true)
+@JsonIgnoreProperties({"createDeptId", "createUserId", "createTime", "updateUserId", "updateTime", "isDeleted"})
+public class ${entity} extends ${superEntityClass}#if(${activeRecord})<${entity}>#end {
+#else
+public class ${entity} implements Serializable{
+#end
+    private static final long serialVersionUID=1L;
+## ----------  BEGIN 字段循环遍历  ----------
+#foreach($field in ${table.fields})
+
+    #if(${field.keyFlag})
+    #set($keyPropertyName=${field.propertyName})
+    #end
+    #if("$!field.comment" != "")
+    @ApiModelProperty(value = "${field.comment}")
+    #end
+    #if(${field.keyFlag})
+    ## 主键
+    #if(${field.keyIdentityFlag})
+    @TableId(value = "${field.annotationColumnName}", type = IdType.AUTO)
+    #elseif(!$null.isNull(${idType}) && "$!idType" != "")
+    @TableId(value = "${field.annotationColumnName}", type = IdType.${idType})
+    #elseif(${field.convert})
+    @TableId("${field.annotationColumnName}")
+    #end
+    ## 普通字段
+    #elseif($!{field.fill})
+    ## -----   存在字段填充设置   -----
+    #if($!{field.convert})
+    @TableField(value = "$!{field.name}", fill = FieldFill.$!{field.fill})
+    #else
+    @TableField(fill = FieldFill.$!{field.fill})
+    #end
+    #elseif($!{field.convert})
+    ## @TableField("$!{field.name}")
+    #end
+    ## 乐观锁注解
+    #if(${field.versionField})
+    @Version
+    #end
+    ## 逻辑删除注解
+    #if($!{logicDeleteFieldName}==$!{field.name})
+    @TableLogic
+    #end
+private $!{field.propertyType} $!{field.propertyName};
+#end
+}

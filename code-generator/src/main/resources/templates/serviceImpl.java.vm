@@ -1,0 +1,27 @@
+package $!{package.ServiceImpl};
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import ${package.Entity}.${entity};
+    #set($voPackage=$package.Entity.replace("entity","vo"))
+import $!{voPackage}.$!{entity}VO;
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+import ${superServiceImplClassPackage};
+import org.springframework.stereotype.Service;
+
+
+/**
+ * $!{table.comment} 实现类
+ *
+ * @author $!{author}
+ * @date $!{date}
+ */
+@Service
+public class $!{table.serviceImplName} extends $!{superServiceImplClass}<$!{table.mapperName}, $!{entity}> implements $!{table.serviceName} {
+
+    @Override
+    public IPage<$!{entity}VO> get$!{entity}Page(IPage<$!{entity}VO> page, $!{entity}DTO $!{table.entityPath}) {
+        return page.setRecords(baseMapper.get$!{entity}Page(page, $!{table.entityPath}));
+    }
+
+}

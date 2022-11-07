@@ -1,0 +1,24 @@
+#set($voPackage=$package.Entity.replace("entity","vo"))
+package $!{voPackage};
+
+import io.swagger.annotations.ApiModel;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import $!{package.Entity}.$!{entity};
+
+
+/**
+ * $!{table.comment} 视图实体类
+ *
+ * @author $!{author}
+ * @date $!{date}
+ */
+#if($!{entityLombokModel})
+@Data
+@EqualsAndHashCode(callSuper = true)
+#end
+@ApiModel(value = "$!{entity}VO对象")
+public class $!{entity}VO extends $!{entity} {
+    private static final long serialVersionUID = 1L;
+
+}

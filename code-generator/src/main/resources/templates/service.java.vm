@@ -1,0 +1,27 @@
+package $!{package.Service};
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import ${package.Entity}.${entity};
+import ${superServiceClassPackage};
+#set($voPackage=$package.Entity.replace("entity","vo"))
+import $!{voPackage}.$!{entity}VO;
+
+
+/**
+ * $!{table.comment} 服务类
+ *
+ * @author $!{author}
+ * @date $!{date}
+ */
+public interface $!{table.serviceName} extends $!{superServiceClass}<$!{entity}> {
+
+    /**
+     * 分页查询
+     *
+     * @param page 分页
+     * @param $!{table.entityPath} 查询条件
+     * @return IPage<$!{entity}VO>
+     */
+    IPage<$!{entity}VO> get$!{entity}Page(IPage<$!{entity}VO> page, $!{entity}DTO $!{table.entityPath});
+
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.monster.code.generator.mapper.CodeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="codeResultMap" type="com.monster.code.generator.entity.Code">
+         <result column="id" property="id"/>
+         <result column="create_user_id" property="createUserId"/>
+         <result column="create_time" property="createTime"/>
+         <result column="update_user_id" property="updateUserId"/>
+         <result column="update_time" property="updateTime"/>
+         <result column="is_deleted" property="isDeleted"/>
+         <result column="datasource_id" property="datasourceId"/>
+         <result column="service_name" property="serviceName"/>
+         <result column="code_name" property="codeName"/>
+         <result column="table_name" property="tableName"/>
+         <result column="table_prefix" property="tablePrefix"/>
+         <result column="pk_name" property="pkName"/>
+         <result column="package_name" property="packageName"/>
+         <result column="base_mode" property="baseMode"/>
+         <result column="api_path" property="apiPath"/>
+    </resultMap>
+
+    <select id="getCodePage" resultMap="codeResultMap">
+        select * from mpg_code where is_deleted = 0
+    </select>
+
+</mapper>
